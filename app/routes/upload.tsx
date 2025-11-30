@@ -8,7 +8,7 @@ import {generateUUID} from "~/lib/utils";
 import {prepareInstructions} from "../../constants";
 
 const Upload = () => {
-    const {auth, isLoading, fs, ai, kv} = usePuterStore();
+    const {fs, ai, kv} = usePuterStore();
     const navigate = useNavigate();
     const [isProcessing, setIsProcessing] = useState(false);
     const [statusText, setStatusText] = useState('');
@@ -17,7 +17,7 @@ const Upload = () => {
         setFile(file);
     }
 
-    const handleAnalyze = async ({companyName, jobTitle, jobDescription, file}: {companyName: string, jobTitle: string, jobDescription: string, file: file}) => {
+    const handleAnalyze = async ({companyName, jobTitle, jobDescription, file}: {companyName: string, jobTitle: string, jobDescription: string, file: File}) => {
         setIsProcessing(true);
         setStatusText('Uploading the file...');
         const uploadedFile = await fs.upload([file]);
@@ -42,7 +42,7 @@ const Upload = () => {
             companyName, jobTitle, jobDescription,
             feedback: '',
         }
-        await kv.set(`resume: ${uuid}`, JSON.stringify(data));
+        await kv.set(`resume:${uuid}`, JSON.stringify(data));
         setStatusText('Analyzing...');
         const feedback = await ai.feedback(
             uploadedImage.path,
@@ -52,10 +52,9 @@ const Upload = () => {
         const feedbackText = typeof feedback.message.content === 'string' ?
             feedback.message.content :
             feedback.message.content[0].text;
-        data.feedback = JSON.parse(feedbackText);
-        await kv.set(`resume: ${uuid}`, JSON.stringify(data));
+        data.feedback = JSON.parse(feedbackText.replace(/```json/i,"").replace(/```/g,"").trim());
+        await kv.set(`resume:${uuid}`, JSON.stringify(data));
         setStatusText('Analysis Complete, redirecting... ');
-        // console.log(data);
         navigate(`/resume/${uuid}`);
     }
 
@@ -85,10 +84,10 @@ const Upload = () => {
                 {isProcessing ? (
                     <>
                         <h2>{statusText}</h2>
-                        <img src="/images/resume-scan.gif" className="w-full"/>
+                        <img src="/images/resume-scan.gif" alt="scan-gif" className="w-full"/>
                     </>
                 ) : (
-                    <h2>Drop your resume for an ATS sccore and improvement tips</h2>
+                    <h2>Drop your resume for an ATS score and improvement tips</h2>
                 )}
                 {!isProcessing && (
                     <form id="upload-form" onSubmit={handleSubmit} className="flex flex-col gap-4 mt-8">

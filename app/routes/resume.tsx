@@ -24,7 +24,7 @@ const Resume = () => {
 
   useEffect(() => {
        const loadResume = async () => {
-           const resume = await kv.get(`resume: ${id}`);
+           const resume = await kv.get(`resume:${id}`);
            if(!resume) return;
            const data = JSON.parse(resume);
 
@@ -36,10 +36,11 @@ const Resume = () => {
            setResumeUrl(resumeUrl);
 
            const imageBlob = await fs.read(data.imagePath);
+           if(!imageBlob) return;
            const imageUrl = URL.createObjectURL(imageBlob);
            setImageUrl(imageUrl);
            setFeedback(data.feedback);
-           console.log({resumeUrl, imageUrl, feedback: data.feedback});
+           // console.log({resumeUrl, imageUrl, feedback: data.feedback});
        }
        loadResume();
     }, [id]);
@@ -67,11 +68,11 @@ const Resume = () => {
                 {feedback ? (
                     <div className="flex flex-col gap-8 animate-in fade-in duration-1000">
                         <Summary feedback={feedback}/>
-                        <ATS score={feedback.ATS.score || 0} suggestions={feedback.ATS.tips || []}/>
+                        <ATS score={feedback.ATS?.score || 0} suggestions={feedback.ATS?.tips || []}/>
                         <Details feedback={feedback}/>
                     </div>
                 ) :
-                <img src="/images/resume-scan-2.gif" className="w-full"/>}
+                <img src="/images/resume-scan-2.gif" alt="scan-gif" className="w-full"/>}
             </section>
         </div>
     </main>
