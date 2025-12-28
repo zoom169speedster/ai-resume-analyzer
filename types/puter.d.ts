@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 Yash Kushwaha
+ * Licensed under the MIT License. See LICENSE file for details.
+*/
 interface FSItem {
     id: string;
     uid: string;

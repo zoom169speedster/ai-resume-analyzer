@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 Yash Kushwaha
+ * Licensed under the MIT License. See LICENSE file for details.
+*/
 export interface PdfConversionResult {
     imageUrl: string;
     file: File | null;

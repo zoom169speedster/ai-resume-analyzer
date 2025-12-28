@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 Yash Kushwaha
+ * Licensed under the MIT License. See LICENSE file for details.
+*/
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { usePuterStore } from "~/lib/puter";

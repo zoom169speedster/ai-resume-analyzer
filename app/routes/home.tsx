@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 Yash Kushwaha
+ * Licensed under the MIT License. See LICENSE file for details.
+*/
 import type { Route } from "./+types/home";
 import Navbar from "~/components/Navbar";
 import ResumeCard from "~/components/ResumeCard";
@@ -26,7 +30,7 @@ export default function Home() {
             const parsedResumes = kvResumes?.map((resume) => (
                 JSON.parse(resume.value) as Resume
             ));
-            console.log(parsedResumes);
+            // console.log(parsedResumes);
             setResumes(parsedResumes || []);
             setLoadingResumes(false);
         }

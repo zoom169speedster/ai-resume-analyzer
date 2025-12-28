@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 Yash Kushwaha
+ * Licensed under the MIT License. See LICENSE file for details.
+*/
 const ScoreCircle = ({ score = 75 }: { score: number }) => {
     const radius = 40;
     const stroke = 8;

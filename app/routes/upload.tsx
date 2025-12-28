@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 Yash Kushwaha
+ * Licensed under the MIT License. See LICENSE file for details.
+*/
 import React, {type FormEvent, useState} from 'react';
 import Navbar from "~/components/Navbar";
 import FileUploader from "~/components/FileUploader";
